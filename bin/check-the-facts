@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require './lib/check_the_facts'
+
+CheckTheFacts::CLI.new.call
+
+puts "Hello World"
+
