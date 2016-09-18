@@ -14,6 +14,8 @@ class Scraper
           new_article.title = object.css("a").text
           new_article.url = object.css("a").attribute("href").value
           new_article.origin = get_origin(new_article.url)
+          new_article.claim = "Hello"
+
           articles << new_article
       end
       articles.each do |a|
@@ -23,9 +25,11 @@ class Scraper
           
   def get_origin(url)
     article = Nokogiri::HTML(open("http://www.snopes.com" + url))
-    origin = article.css("#fact_check_origin").text
-    puts origin
+    origin = article.css("#fact_check_origin").first.parent
+    origin.text
   end
+  
+
   
   
 end
