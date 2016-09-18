@@ -1,6 +1,3 @@
 class Article
-    attr_accessor :title, :url, :origin
-    
-    
-    
+    attr_accessor :title, :url, :origin, :claim, :author, :author_bio
 end
