@@ -1,5 +1,5 @@
 class Scraper
-    attr_accessor :doc, :article
+    attr_accessor :doc, :articles
     
   def initialize
     @doc = Nokogiri::HTML(open("http://www.snopes.com/category/facts"))
@@ -7,7 +7,7 @@ class Scraper
   end
   
   def create_articles
-      articles = []
+      @articles = []
       article_objects = @doc.css("h4")
       article_objects.each do |object|
           new_article = Article.new
@@ -18,12 +18,14 @@ class Scraper
           new_article.claim = get_claim(article)
           new_article.author = get_author(article)
           new_article.author_bio = get_author_bio(article)
+          new_article.accuracy = get_accuracy(article)
 
-          articles << new_article
+          @articles << new_article
       end
-      articles.each do |a|
-          puts a.author_bio
-      end
+      @articles = @articles[0..9]
+     # articles.each do |a|
+    #      puts a.author_bio
+   #   end
     end
           
   def get_origin(article)
@@ -35,17 +37,22 @@ class Scraper
     claim = article.css("span.green-label").first.parent
     claim.text
     #This works because it return the FIRST XML element in an
-    #array of span.green-label elements. Hizell yeah
+    #array of span.green-label elements.
   end
   
   def get_author(article)
-    author = article.css(".author-name").first.parent
+    author = article.css(".author-name")
     author.text.strip
   end
   
   def get_author_bio(article)
-    author_bio = article.css(".author-bio p").first.parent
+    author_bio = article.css(".author-bio p")
     author_bio.text.strip
+  end
+  
+  def get_accuracy(article)
+   accuracy = article.css("div.claim-old")
+   accuracy.text.strip.downcase.capitalize
   end
   
 end

@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require './config/environment.rb'
-puts "Welcome to the console"
+puts "----Console----"
 
-scraper = Scraper.new 
+new_cli = CLI.new
+new_cli.start
