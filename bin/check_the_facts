@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+require './config/environment.rb'
+puts "----  Executing....  ----"
+
+new_cli = CLI.new
+new_cli.start
