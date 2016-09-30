@@ -21,12 +21,27 @@ class CLI
     end
     puts " "
     puts "Enter an article number or type 'exit' to exit: "
+    print "> "
     input = gets.chomp("Enter a number >> ")
     select_article(input)
   end
   
 def select_article(last_input)
-  if last_input.to_i < 31
+  if last_input.to_i == 0
+      if last_input == "exit\n"
+          puts "Bye for now!"
+          exit
+      else
+        puts "Please only enter number or 'exit.' "
+        puts "Press any key to continue..."                                                                                                    
+        STDIN.getch                                                                                                              
+        print ''
+        start
+      end
+  
+          
+  elsif last_input.to_i < 31
+    puts " "
     puts "---------Article Title---------"
     puts scraper.articles[last_input.to_i - 1].title
     puts "------Article Information------"
@@ -36,7 +51,9 @@ def select_article(last_input)
     puts "3: Origin"
     puts "4: Author"
     puts "5: Author Bio"
-    puts "6: Return to All Articles"
+    puts "6: Full Artice"
+    puts "7: Return to All Articles"
+    print "> "
     input = gets.chomp
     second_layer(last_input, input)
   else
@@ -79,8 +96,16 @@ def second_layer(last_input, input)
         STDIN.getch                                                                                                              
         print ''
         select_article(last_input)
-
+    
     when "6"
+        puts "Full Article:"
+        puts scraper.articles[last_input.to_i - 1].full_article
+        puts "Press any key to continue..."                                                                                                    
+        STDIN.getch                                                                                                              
+        print ''
+        select_article(last_input)
+        
+    when "7"
         start
     end
 end

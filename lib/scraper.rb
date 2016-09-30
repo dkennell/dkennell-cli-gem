@@ -2,7 +2,7 @@ class Scraper
     attr_accessor :doc, :articles
     
   def initialize
-    @doc = Nokogiri::HTML(open("http://www.snopes.com/category/facts"))
+    @doc = Nokogiri::HTML(open("http://www.snopes.com/category/facts/"))
     create_articles
   end
   
@@ -19,13 +19,14 @@ class Scraper
           new_article.author = get_author(article)
           new_article.author_bio = get_author_bio(article)
           new_article.accuracy = get_accuracy(article)
+          new_article.full_article = get_full_article(article)
 
           @articles << new_article
       end
       @articles = @articles[0..9]
      # articles.each do |a|
-    #      puts a.author_bio
-   #   end
+    #      puts a.full_article
+    #  end
     end
           
   def get_origin(article)
@@ -53,6 +54,11 @@ class Scraper
   def get_accuracy(article)
    accuracy = article.css("div.claim-old")
    accuracy.text.strip.downcase.capitalize
+  end
+  
+  def get_full_article(article)
+    full_article = article.css(".article-text")
+    full_article.text.gsub(/\s{2,}/, "\n").gsub("if(window.proper_display) { proper_display('snopes_featured_1'); }", "").gsub("if(window.proper_display) { proper_display('snopes_content_1'); }", "")
   end
   
 end
