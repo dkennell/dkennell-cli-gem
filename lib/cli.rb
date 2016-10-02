@@ -32,7 +32,7 @@ def select_article(last_input)
           puts "Bye for now!"
           exit
       else
-        puts "Please only enter number or 'exit.' "
+        puts "Please only enter a number or 'exit.' "
         puts "Press any key to continue..."                                                                                                    
         STDIN.getch                                                                                                              
         print ''
@@ -106,6 +106,12 @@ def second_layer(last_input, input)
         select_article(last_input)
         
     when "7"
+        start
+    else
+        puts "Please only enter a number.' "
+        puts "Press any key to continue..."                                                                                                    
+        STDIN.getch                                                                                                              
+        print ''
         start
     end
 end
